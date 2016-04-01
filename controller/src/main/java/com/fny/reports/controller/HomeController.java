@@ -1,6 +1,7 @@
 package com.fny.reports.controller;
 
 import java.util.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fny.reports.commons.entity.ItemDO;
-
+import com.fny.reports.commons.entity.OrderSummaryDO;
 import com.fny.reports.service.persistence.dao.OrderDetailDao;
+import com.fny.reports.service.persistence.dao.OrderSummaryDao;
 import com.fny.reports.service.persistence.dao.UpdateItemDao;
 import com.fny.reports.service.persistence.dao.UpdateOrderStatusDao;
 
@@ -34,6 +36,9 @@ public class HomeController {
 
 	@Autowired
 	private OrderDetailDao orderDetailsDao;
+	
+	@Autowired
+	private OrderSummaryDao orderSummaryDao;
 	
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
 
@@ -58,10 +63,11 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/orderdetail",method= RequestMethod.GET)
-	public ModelAndView orderdetails()
+	public ModelAndView orderdetails() throws SQLException
 	{
-		
-		ModelAndView modelAndView=new ModelAndView("categoryWiseSku");
+		ModelAndView modelAndView=new ModelAndView("OrderDetails");
+		 List<OrderSummaryDO> orderSummary=orderSummaryDao.queryForOrderDetails();
+		 modelAndView.addObject("orderSummary", orderSummary);
 
 		return modelAndView;
 	}
@@ -93,7 +99,7 @@ public class HomeController {
 		return modelAndView;                      
 	}
 	@RequestMapping(value="/updateStatusDb",method= RequestMethod.POST)
-	public void addItem(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
+	public void updateStatusDb(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
 	{
 		orderDetailsDao.update(orderId,status);
 		
@@ -111,6 +117,12 @@ public class HomeController {
 			 @RequestParam("userName") String userName, @RequestParam("password") String password){
 		
 		return null;
+	}
+	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)
+	public String adminPanel() {
+    		System.out.println("Invoking dashboard links");
+			return "adminPanel";
+		
 	}
 	
 }

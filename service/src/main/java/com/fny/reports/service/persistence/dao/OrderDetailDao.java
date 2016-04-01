@@ -1,5 +1,7 @@
 package com.fny.reports.service.persistence.dao;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,23 @@ public class OrderDetailDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	private static final Log LOG = LogFactory.getLog(OrderDetailDao.class);
-	
+
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
 	public void update(Integer orderId,String status)
 	{
-		String sql="update hotspice.order_details set status=? where order_id=?";
+		
+		LOG.info("inside update order status");
+	//	String sql="update hotspice.order_details set status=? where order_id=?";
 		LOG.info("sql");
-		jdbcTemplate.update(sql, "status","orderId");
+		this.jdbcTemplate.update(
+                "update hotspice.order_details set status=? where order_id=?", 
+                status, orderId);
+		//jdbcTemplate.update(sql, "status","orderId");
 	   
 	}
+	
 	
 }

@@ -19,6 +19,9 @@ public class UpdateItemDao{
 	@Qualifier("jdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
+	public static final String RESPONSE_FAILURE = "FAILURE";
+	public static final String RESPONSE_SUCCESS = "SUCCESS";
+
 	private static final Log LOG = LogFactory.getLog(UpdateItemDao.class);
 
 	public void insert(ItemDO item){
