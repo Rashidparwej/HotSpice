@@ -18,15 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fny.reports.commons.entity.ItemDO;
 import com.fny.reports.commons.entity.OrderSummaryDO;
+import com.fny.reports.commons.entity.UsersDO;
 import com.fny.reports.service.persistence.dao.OrderDetailDao;
 import com.fny.reports.service.persistence.dao.OrderSummaryDao;
 import com.fny.reports.service.persistence.dao.UpdateItemDao;
 import com.fny.reports.service.persistence.dao.UpdateOrderStatusDao;
+import com.fny.reports.service.persistence.dao.UsersDao;
 
 @Controller
 @RequestMapping("/api")
 public class HomeController {
 
+	public static final String RESPONSE_FAILURE = "FAILURE";
+	public static final String RESPONSE_SUCCESS = "SUCCESS";
 
 	@Autowired
 	private UpdateOrderStatusDao updateOrderStatusDao;
@@ -39,6 +43,9 @@ public class HomeController {
 	
 	@Autowired
 	private OrderSummaryDao orderSummaryDao;
+	
+	@Autowired
+	private UsersDao usersDao;
 	
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
 
@@ -54,7 +61,13 @@ public class HomeController {
 		return "index";
 	}
 
-	
+	// return list;
+		@RequestMapping(value="/SignUp", method = RequestMethod.GET)
+		public String SignUp() {
+			System.out.println("Invoked home");
+			return "SignUp";
+		}
+
 	// return list;
 	@RequestMapping(value="/updateItems", method = RequestMethod.GET)
 	public String update() {
@@ -105,18 +118,41 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login1(@RequestParam("username") String username, @RequestParam("password") String password){
+	@RequestMapping(value="/customer", method = RequestMethod.GET)
+	public String customer(){
 		
-		return null;
+		return "index";
+	}
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("pass") String pass){
+	 List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
+	 if(userData.size()!=0)
+	 {
+		 ModelAndView modelAndView=new ModelAndView("PlaceOrder");
+		 modelAndView.addObject("userData", userData);
+		 return modelAndView;
+	 }
+	 else
+	 {
+		 ModelAndView modelAndView=new ModelAndView("errorPage");
+		 return modelAndView;
+
+	 }
 	}
 	
 
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
-	public String login(@RequestParam("firstname") String firstname, @RequestParam("lastName") String lastName,
-			 @RequestParam("userName") String userName, @RequestParam("password") String password){
+	public String signup(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
+			@RequestParam("email") String email, @RequestParam("uname") String uname, @RequestParam("pass") String pass){
 		
-		return null;
+		UsersDO user =new UsersDO(firstname, lastname, email, uname, pass);
+		
+		if(usersDao.addDateOfUser(user)==RESPONSE_SUCCESS)
+		{
+			return "index";
+	}
+		else
+			return "errorPage";
 	}
 	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)
 	public String adminPanel() {
