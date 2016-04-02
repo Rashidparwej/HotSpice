@@ -5,6 +5,13 @@ public class ItemDO {
 	public Integer itemId;
 	public Integer categoryId;
 	public String name;
+	public ItemDO(int itemId, String name) {
+		this.itemId=itemId;
+		this.name=name;
+	
+	}
+	public ItemDO() {
+	}
 	public String getName() {
 		return name;
 	}

@@ -26,20 +26,23 @@ public class UsersDao {
 	@Autowired
 	@Qualifier("jdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
+	
+	
 	public List<UsersDO> checkUserPresence(String uname,String pass)
 	{
-	   String sql="select * from users where uname='" + uname + "' and pass='" + pass + "'";
+	   String sql="select user_id,first_name,last_name,email,uname,pass from users where uname='" + uname + "' and pass='" + pass + "'";
 		LOG.info(sql);
 		List<UsersDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<UsersDO>>() {
 
 			public List<UsersDO> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<UsersDO> empList = new ArrayList<UsersDO>();
-				while (rs.next()) {
-
+				while (rs.next()) {                     
+					
 					UsersDO emp = new UsersDO(rs.getString("first_name"),
 							rs.getString("last_name"),
 							rs.getString("email")
-							,rs.getString("uname"), rs.getString("pass")
+							,rs.getString("uname"), rs.getString("pass"),
+							rs.getInt("user_id")
 							);
 					
 					empList.add(emp);
@@ -48,9 +51,7 @@ public class UsersDao {
 			}
 
 		});
-
 		return empList;
-	
 	}
 	
 	public String addDateOfUser(UsersDO user)
@@ -61,7 +62,7 @@ public class UsersDao {
 				"(first_name, last_name, email, uname, pass) VALUES (?, ?, ?, ?, ?)";
 					 
 			LOG.info(sql);
-			
+
 			jdbcTemplate.update(sql, new Object[] { user.getFirstName(),user.getLastName(),
 					user.getEmail(),user.getUserName(),user.getPassword()
 				
@@ -70,7 +71,6 @@ public class UsersDao {
 	}
 		else 
 			return RESPONSE_FAILURE;
-			
 
 }
 }

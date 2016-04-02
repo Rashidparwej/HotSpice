@@ -63,7 +63,7 @@
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/2.6.0/jackson-jaxrs-json-provider-2.6.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/jaxrs/jackson-jaxrs-base/2.6.0/jackson-jaxrs-base-2.6.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.6.0/jackson-module-jaxb-annotations-2.6.0.jar"/>
-  <classpathentry kind="var" path="M2_REPO/com/thetransactioncompany/cors-filter/1.8/cors-filter-1.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/thetransactioncompany/cors-filter/1.8/cors-filter-1.8.jar" sourcepath="M2_REPO/com/thetransactioncompany/cors-filter/1.8/cors-filter-1.8-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/thetransactioncompany/java-property-utils/1.9/java-property-utils-1.9.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar"/>
 </classpath>

@@ -6,8 +6,8 @@
         <title>HOTSPICE</title>
     </head>
     <body>
-       <center>  HOT SPICE FOOD DELIVERY SERVICE-ORDER YOUR FOOD</center>
-        <form method="post" action="api/login">
+    <center> Welcome to HotSpice Please login here to continue </center>
+        <form method="post" action="login">
             <center>
             <table border="1" width="30%" cellpadding="3">
                 <thead>
@@ -29,7 +29,7 @@
                         
                     </tr>
                     <tr>
-                        <td colspan="2">Yet Not Registered!! <a href="api/SignUp">Register Here</a></td>
+                        <td colspan="2">Yet Not Registered!! <a href="SignUp">Register Here</a></td>
                     </tr>
                 </tbody>
             </table>

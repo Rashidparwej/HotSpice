@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fny.reports.commons.entity.CategoryDO;
 import com.fny.reports.commons.entity.ItemDO;
+import com.fny.reports.commons.entity.ItemDetailDO;
 import com.fny.reports.commons.entity.OrderSummaryDO;
 import com.fny.reports.commons.entity.UsersDO;
+import com.fny.reports.service.persistence.dao.ItemDetailsDao;
 import com.fny.reports.service.persistence.dao.OrderDetailDao;
 import com.fny.reports.service.persistence.dao.OrderSummaryDao;
 import com.fny.reports.service.persistence.dao.UpdateItemDao;
@@ -46,6 +49,10 @@ public class HomeController {
 	
 	@Autowired
 	private UsersDao usersDao;
+	
+	@Autowired
+	private ItemDetailsDao itemDetailsDao;
+	
 	
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
 
@@ -99,7 +106,7 @@ public class HomeController {
 	{
 		ItemDO item =new ItemDO();
 		item.setCategoryId(categoryId);
-		item.setCost(cost);
+		item.setCost(cost);                        
 		item.setName(name);
 		item.setItemId(itemId);
 		updateItemDao.insert(item);                  
@@ -118,26 +125,22 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value="/customer", method = RequestMethod.GET)
-	public String customer(){
-		
-		return "index";
-	}
+	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("pass") String pass){
-	 List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
-	 if(userData.size()!=0)
-	 {
-		 ModelAndView modelAndView=new ModelAndView("PlaceOrder");
+	
+		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
+		List<CategoryDO> dishType=itemDetailsDao.getDishType();
+		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
 		 modelAndView.addObject("userData", userData);
+		 modelAndView.addObject("dishType",dishType);
 		 return modelAndView;
-	 }
-	 else
+	/* if(userData.size()==0)
 	 {
-		 ModelAndView modelAndView=new ModelAndView("errorPage");
-		 return modelAndView;
+		 ModelAndView modelAndView1=new ModelAndView("errorPage");
+		 return modelAndView1;
 
-	 }
+	 }*/
 	}
 	
 
@@ -145,14 +148,42 @@ public class HomeController {
 	public String signup(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
 			@RequestParam("email") String email, @RequestParam("uname") String uname, @RequestParam("pass") String pass){
 		
-		UsersDO user =new UsersDO(firstname, lastname, email, uname, pass);
-		
+		UsersDO user =new UsersDO();
+		user.setFirstName(firstname);
+		user.setLastName(lastname);
+		user.setEmail(email);
+		user.setUserName(uname);
+        user.setPassword(pass);
 		if(usersDao.addDateOfUser(user)==RESPONSE_SUCCESS)
 		{
-			return "index";
-	}
+			return "start";
+	    }
 		else
 			return "errorPage";
+	}
+
+	@RequestMapping(value="/orderItem", method = RequestMethod.POST)
+	public ModelAndView orderItem(
+		 @RequestParam("itemType") String itemType,@RequestParam("userId") Integer userId){
+		
+		 List<ItemDetailDO> listOfItems=itemDetailsDao.getItemType(itemType);
+		LOG.info(listOfItems);
+		
+		 ModelAndView modelAndView=new ModelAndView("makeOrder");
+		 modelAndView.addObject("listOfItems", listOfItems);
+		modelAndView.addObject("userId",userId);
+		 return modelAndView;
+		
+	}
+	@RequestMapping(value="/orderConfirmed",method= RequestMethod.POST)
+	public ModelAndView orderConfirmed(@RequestParam("userId") Integer userId,
+			@RequestParam("item") String item,
+			@RequestParam("quant") Integer quant)
+	{
+		ModelAndView modelAndView=new ModelAndView("Success");
+		Integer itemId=orderDetailsDao.itemIdFromItem(item);
+		orderDetailsDao.insert(userId, itemId, quant);
+		return modelAndView;                      
 	}
 	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)
 	public String adminPanel() {

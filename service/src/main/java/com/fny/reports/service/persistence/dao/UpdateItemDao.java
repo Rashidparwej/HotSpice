@@ -31,8 +31,9 @@ public class UpdateItemDao{
 				 
 		LOG.info(sql);
 		
-		jdbcTemplate.update(sql, new Object[] { item.getCategoryId(),
-			item.getCost(),item.getItemId(),item.getName()  
+		jdbcTemplate.update(sql, new Object[] { 	item.getItemId(),	
+item.getCategoryId(),item.getName(),
+			item.getCost()  
 			
 		});
 				

@@ -9,21 +9,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-Hi ${userData[0].firstName}
-Welcome to ordering page 
- 
-   
-
-<form method="post"  action="orderItem">
-<select name="itemType">
-			<option value="">Please select one </option>
-			    <c:forEach items="${dishType}" var="dish">
-			 <option value="${dish.categoryName}">${dish.categoryName}</option>
-    </c:forEach>
-		</select>
-<input type="hidden" name="userId" value="${userData[0].userId}">			
-<br></br>   
-<input type="submit" value="GO TO ITEM DETAILS">
-</form>
+DONE
 </body>
 </html>

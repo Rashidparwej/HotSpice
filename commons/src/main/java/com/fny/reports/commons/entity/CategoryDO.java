@@ -15,6 +15,11 @@ public class CategoryDO {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	public CategoryDO(Integer categoryId, String categoryName) {
+		super();
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+	}
 	
 	
 

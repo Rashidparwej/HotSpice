@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+Some Error Occured Please try again
 </body>
 </html>
