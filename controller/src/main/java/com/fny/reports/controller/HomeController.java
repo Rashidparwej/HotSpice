@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fny.reports.commons.entity.CategoryDO;
 import com.fny.reports.commons.entity.ItemDO;
 import com.fny.reports.commons.entity.ItemDetailDO;
+import com.fny.reports.commons.entity.MyOrdersDO;
 import com.fny.reports.commons.entity.OrderSummaryDO;
 import com.fny.reports.commons.entity.UsersDO;
 import com.fny.reports.service.persistence.dao.ItemDetailsDao;
@@ -105,10 +106,10 @@ public class HomeController {
 			@RequestParam("name") String name,@RequestParam("cost")Integer cost)
 	{
 		ItemDO item =new ItemDO();
+		item.setItemId(itemId);
 		item.setCategoryId(categoryId);
 		item.setCost(cost);                        
 		item.setName(name);
-		item.setItemId(itemId);
 		updateItemDao.insert(item);                  
 	}
 	@RequestMapping(value="/removeItem",method= RequestMethod.POST)
@@ -131,9 +132,13 @@ public class HomeController {
 	
 		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
 		List<CategoryDO> dishType=itemDetailsDao.getDishType();
+		List<MyOrdersDO> myorder = orderDetailsDao.getMyOrder(userData.get(0).getUserId());
 		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
 		 modelAndView.addObject("userData", userData);
 		 modelAndView.addObject("dishType",dishType);
+		 if(myorder.size()>0)
+		 modelAndView.addObject("myorder",myorder);
+	
 		 return modelAndView;
 	/* if(userData.size()==0)
 	 {
@@ -168,10 +173,12 @@ public class HomeController {
 		
 		 List<ItemDetailDO> listOfItems=itemDetailsDao.getItemType(itemType);
 		LOG.info(listOfItems);
-		
+		UsersDO user=new UsersDO();
+		user.setUserId(userId);
 		 ModelAndView modelAndView=new ModelAndView("makeOrder");
 		 modelAndView.addObject("listOfItems", listOfItems);
-		modelAndView.addObject("userId",userId);
+		modelAndView.addObject("user",user);
+	
 		 return modelAndView;
 		
 	}
@@ -182,7 +189,7 @@ public class HomeController {
 	{
 		ModelAndView modelAndView=new ModelAndView("Success");
 		Integer itemId=orderDetailsDao.itemIdFromItem(item);
-		orderDetailsDao.insert(userId, itemId, quant);
+		orderDetailsDao.insert(userId, itemId, quant); 
 		return modelAndView;                      
 	}
 	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)

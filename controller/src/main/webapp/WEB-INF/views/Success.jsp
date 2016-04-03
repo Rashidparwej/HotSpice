@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-DONE
+THANKS FOR YOUR ORDER.
+WE WILL GET BACK TO YOU SOON ..
+
 </body>
 </html>

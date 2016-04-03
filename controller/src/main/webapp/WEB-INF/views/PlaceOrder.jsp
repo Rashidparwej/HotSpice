@@ -8,12 +8,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+ <style>
+ table, th, td {
+    border: 1px solid black;
+}
+</style>
 <body>
 Hi ${userData[0].firstName}
 Welcome to ordering page 
+
  
    
-
+MAKE ORDER
 <form method="post"  action="orderItem">
 <select name="itemType">
 			<option value="">Please select one </option>
@@ -25,5 +31,7 @@ Welcome to ordering page
 <br></br>   
 <input type="submit" value="GO TO ITEM DETAILS">
 </form>
+ ORDER HISTORY
+
 </body>
 </html>

@@ -18,7 +18,9 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.fny.reports.commons.entity.CategoryDO;
 import com.fny.reports.commons.entity.ItemDetailDO;
+import com.fny.reports.commons.entity.MyOrdersDO;
 import com.fny.reports.commons.entity.OrderDetailsDO;
 
 @Repository
@@ -87,4 +89,28 @@ public class OrderDetailDao {
 	    }
 	     return 0;
 			}
-}
+	
+	 public List <MyOrdersDO> getMyOrder(Integer userId)
+	 {
+		 String sql="SELECT order_id,status,created_date FROM hotspice.order_details where user_id='"+ userId + "'";
+
+		    
+			List<MyOrdersDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<MyOrdersDO>>() {
+
+				public List<MyOrdersDO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<MyOrdersDO> empList = new ArrayList<MyOrdersDO>();
+					while (rs.next()) {
+
+						MyOrdersDO emp = new MyOrdersDO(rs.getInt("order_id"),rs.getString("status"),rs.getString("created_date"));
+						
+						empList.add(emp);
+					}
+					return empList;
+				}
+
+			});
+
+			return empList;
+		}
+	 }
+

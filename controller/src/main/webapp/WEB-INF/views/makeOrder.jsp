@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+Hi ${user.userId}
 please choose your dish
 <form method="post"  action="orderConfirmed">
 <select name="item">
@@ -19,7 +20,7 @@ please choose your dish
     			<br> Enter Quantity <input type="text" name="quant" />
     
 		</select>
-		<input type="hidden" name="userId" value="userId">	
+		<input type="hidden" name="userId" value="${user.userId}">	
 			<br></br>   
 <input type="submit" value="GO TO ITEM DETAILS">
 </form>

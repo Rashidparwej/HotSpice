@@ -53,7 +53,7 @@ public class ItemDetailsDao {
 	{
 		
 	 String sql="select item_id,name from item where category_id in("+
-	 "select category_id from category where name like '" + category + "')";
+	 "select category_id from category where name = '" + category + "')";
     LOG.info(sql);
 	List<ItemDetailDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<ItemDetailDO>>() {
 
