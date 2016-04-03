@@ -16,6 +16,12 @@ public class OrderDetailsDO {
 		this.userId = userId;
 	}
 	
+	public OrderDetailsDO(Integer orderId, String status) {
+		super();
+		this.orderId = orderId;
+		this.status = status;
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}

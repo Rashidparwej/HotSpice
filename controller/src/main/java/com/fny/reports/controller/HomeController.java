@@ -20,6 +20,7 @@ import com.fny.reports.commons.entity.CategoryDO;
 import com.fny.reports.commons.entity.ItemDO;
 import com.fny.reports.commons.entity.ItemDetailDO;
 import com.fny.reports.commons.entity.MyOrdersDO;
+import com.fny.reports.commons.entity.OrderDetailsDO;
 import com.fny.reports.commons.entity.OrderSummaryDO;
 import com.fny.reports.commons.entity.UsersDO;
 import com.fny.reports.service.persistence.dao.ItemDetailsDao;
@@ -83,6 +84,26 @@ public class HomeController {
 		return "UpdateItem";
 	}
 
+	
+	@RequestMapping(value="/deleteItemDb", method = RequestMethod.POST)
+	public String deleteItem(@RequestParam("itemId") Integer itemId) {
+		
+		itemDetailsDao.delete(itemId);
+		return "Welcome";
+	 
+	}
+	@RequestMapping(value="/deleteItem", method = RequestMethod.GET)
+	public ModelAndView deleteItem() {
+		ModelAndView modelAndView=new ModelAndView("DeleteItem");
+		 List<ItemDetailDO> listOfItems=itemDetailsDao.getItemIds();
+		 modelAndView.addObject("listOfItems", listOfItems);
+
+		return modelAndView;
+	
+	}
+	
+	
+
 	@RequestMapping(value="/orderdetail",method= RequestMethod.GET)
 	public ModelAndView orderdetails() throws SQLException
 	{
@@ -112,13 +133,7 @@ public class HomeController {
 		item.setName(name);
 		updateItemDao.insert(item);                  
 	}
-	@RequestMapping(value="/removeItem",method= RequestMethod.POST)
-	public ModelAndView removeItem()
-	{
-		ModelAndView modelAndView=new ModelAndView("categoryWiseSku");
-                                                     
-		return modelAndView;                      
-	}
+	
 	@RequestMapping(value="/updateStatusDb",method= RequestMethod.POST)
 	public void updateStatusDb(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
 	{
@@ -132,20 +147,21 @@ public class HomeController {
 	
 		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
 		List<CategoryDO> dishType=itemDetailsDao.getDishType();
-		List<MyOrdersDO> myorder = orderDetailsDao.getMyOrder(userData.get(0).getUserId());
+		//List<MyOrdersDO> myorder = orderDetailsDao.getMyOrder(userData.get(0).getUserId());
 		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
 		 modelAndView.addObject("userData", userData);
 		 modelAndView.addObject("dishType",dishType);
-		 if(myorder.size()>0)
+		/* if(myorder.size()>0)
 		 modelAndView.addObject("myorder",myorder);
 	
-		 return modelAndView;
-	/* if(userData.size()==0)
+	if(userData.size()==0)
 	 {
 		 ModelAndView modelAndView1=new ModelAndView("errorPage");
 		 return modelAndView1;
 
 	 }*/
+		 return modelAndView;
+
 	}
 	
 
@@ -158,7 +174,7 @@ public class HomeController {
 		user.setLastName(lastname);
 		user.setEmail(email);
 		user.setUserName(uname);
-        user.setPassword(pass);
+        user.setPassword(pass);                     
 		if(usersDao.addDateOfUser(user)==RESPONSE_SUCCESS)
 		{
 			return "start";
@@ -172,13 +188,14 @@ public class HomeController {
 		 @RequestParam("itemType") String itemType,@RequestParam("userId") Integer userId){
 		
 		 List<ItemDetailDO> listOfItems=itemDetailsDao.getItemType(itemType);
-		LOG.info(listOfItems);
-		UsersDO user=new UsersDO();
-		user.setUserId(userId);
+		 LOG.info(listOfItems);
+		 UsersDO user=new UsersDO();
+		 user.setUserId(userId);
 		 ModelAndView modelAndView=new ModelAndView("makeOrder");
 		 modelAndView.addObject("listOfItems", listOfItems);
-		modelAndView.addObject("user",user);
-	
+		 modelAndView.addObject("user",user);
+	     //List<OrderDetailsDO> orderHistory=orderDetailsDao.getMyOrder(userId);
+	     
 		 return modelAndView;
 		
 	}

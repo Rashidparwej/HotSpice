@@ -3,10 +3,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <body style="background-color:red;">
+    
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registration</title>
     </head>
     <body>
+           <center> <h1><b>HOT SPICE FOOD DELIVERY SERVICE-ORDER YOUR FOOD</b></h1> </center>
+    
         <form method="post" action="signup">
             <center>
             <table border="1" width="30%" cellpadding="5">

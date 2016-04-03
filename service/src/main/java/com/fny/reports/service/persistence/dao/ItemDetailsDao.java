@@ -71,6 +71,36 @@ public class ItemDetailsDao {
 	});
 
 	return empList;
-}
+	}
+
+	public List<ItemDetailDO> getItemIds()
+	{
+		
+	 String sql="select item_id,name from item ";
+    LOG.info(sql);
+	List<ItemDetailDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<ItemDetailDO>>() {
+
+		public List<ItemDetailDO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+			List<ItemDetailDO> empList = new ArrayList<ItemDetailDO>();
+			while (rs.next()) {
+
+				ItemDetailDO emp =new ItemDetailDO(rs.getInt("item_id"),rs.getString("name"));
+				
+				empList.add(emp);
+			}
+			return empList;
+		}
+
+	});
+
+	return empList;
+	}
+	
+	public void delete(Integer itemId)
+	{
+		this.jdbcTemplate.update(
+                "delete from item where item_id=?", 
+                itemId);
+	}
 	
 }

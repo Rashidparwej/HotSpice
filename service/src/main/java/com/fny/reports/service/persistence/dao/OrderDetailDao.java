@@ -90,18 +90,18 @@ public class OrderDetailDao {
 	     return 0;
 			}
 	
-	 public List <MyOrdersDO> getMyOrder(Integer userId)
+	 public List <OrderDetailsDO> getMyOrder(Integer userId)
 	 {
-		 String sql="SELECT order_id,status,created_date FROM hotspice.order_details where user_id='"+ userId + "'";
+		 String sql="SELECT order_id,status FROM hotspice.order_details where user_id='"+ userId + "'";
 
 		    
-			List<MyOrdersDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<MyOrdersDO>>() {
+			List<OrderDetailsDO> empList = this.jdbcTemplate.query(sql, new ResultSetExtractor<List<OrderDetailsDO>>() {
 
-				public List<MyOrdersDO> extractData(ResultSet rs) throws SQLException, DataAccessException {
-					List<MyOrdersDO> empList = new ArrayList<MyOrdersDO>();
+				public List<OrderDetailsDO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+					List<OrderDetailsDO> empList = new ArrayList<OrderDetailsDO>();
 					while (rs.next()) {
 
-						MyOrdersDO emp = new MyOrdersDO(rs.getInt("order_id"),rs.getString("status"),rs.getString("created_date"));
+						OrderDetailsDO emp = new OrderDetailsDO(rs.getInt("order_id"),rs.getString("status"));
 						
 						empList.add(emp);
 					}

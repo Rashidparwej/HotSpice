@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
+    <body style="background-color:blue;">
+
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
 <meta http-equiv="refresh" content="60">
 <title>DASHBOARD-FNY</title>

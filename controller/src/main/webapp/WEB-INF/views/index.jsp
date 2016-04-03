@@ -4,9 +4,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>HOTSPICE</title>
+        <body style="background-color:red;">
+        
     </head>
     <body>
-       <center>  HOT SPICE FOOD DELIVERY SERVICE-ORDER YOUR FOOD</center>
+       <center> <h1><b>HOT SPICE FOOD DELIVERY SERVICE-ORDER YOUR FOOD</b></h1> </center>
         <form method="post" action="api/login">
             <center>
             <table border="1" width="30%" cellpadding="3">
