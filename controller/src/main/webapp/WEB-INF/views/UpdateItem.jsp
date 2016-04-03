@@ -9,24 +9,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1> UPDATE ITEM IN ITEM TABLE </h1>
+<h1> ADD ITEM IN ITEM TABLE </h1>
 <form action="addItem" method="post">
     <table cellspacing="5" cellpadding="5" border="1">
         <tr>
             <td align="right">ITEM  ID</td>
-            <td><input type="text" name="itemId"></td>
+            <td><input type="text" name="itemId" required="true"></td>
         </tr>
         <tr>
             <td align="right">CATEGORY ID</td>
-            <td><input type="text" name="categoryId"></td>
+            <td><input type="text" name="categoryId" required="true"></td>
         </tr>
         <tr>
             <td align="right">NAME</td>
-            <td><input type="text" name="name"></td>
+            <td><input type="text" name="name" required="true"></td>
         </tr>
         <tr>
             <td align="right">COST</td>
-            <td><input type="text" name="cost"></td>
+            <td><input type="text" name="cost" required="true"></td>
         </tr>
 
     </table>
