@@ -114,6 +114,11 @@ public class HomeController {
 	{
 		ModelAndView modelAndView=new ModelAndView("OrderHistory");
 		List<OrderDetailsDO> myorder = orderDetailsDao.getMyOrder(userId);
+		if(myorder.size()==0)
+		{
+			ModelAndView modelAndView1=new ModelAndView("OrderHistoryError");
+			return modelAndView1;
+		}
 		modelAndView.addObject("myorder", myorder);
 		return modelAndView;
 	}
