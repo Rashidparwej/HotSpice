@@ -86,7 +86,7 @@ public class HomeController {
 	public String deleteItem(@RequestParam("itemId") Integer itemId) {
 		
 		itemDetailsDao.delete(itemId);
-		return "Welcome";
+		return "Sucess";
 	 
 	}
 	
