@@ -58,8 +58,7 @@ public class HomeController {
 	
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
 
-	//private PaymentSuccessDO paymentSuccessDo;
-                                                   
+	                                                   
 	public HomeController() {                      
 		System.out.println("Bean created");
 	}
@@ -70,14 +69,12 @@ public class HomeController {
 		return "index";
 	}
 
-	// return list;
-		@RequestMapping(value="/SignUp", method = RequestMethod.GET)
+			@RequestMapping(value="/SignUp", method = RequestMethod.GET)
 		public String SignUp() {
 			System.out.println("Invoked home");
 			return "SignUp";
 		}
 
-	// return list;
 	@RequestMapping(value="/updateItems", method = RequestMethod.GET)
 	public String update() {
 		System.out.println("Invoked home");
@@ -143,9 +140,18 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/updateStatusDb",method= RequestMethod.POST)
-	public void updateStatusDb(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
+	public String updateStatusDb(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
 	{
 		orderDetailsDao.update(orderId,status);
+		return "Welcome";
+		
+	}
+
+	@RequestMapping(value="/updateStatusForCustomer",method= RequestMethod.POST)
+	public String updateStatusForCustomer(@RequestParam("orderId") Integer orderId)
+	{
+		orderDetailsDao.updateStats(orderId);
+		return "Welcome";
 		
 	}
 	
@@ -154,20 +160,17 @@ public class HomeController {
 	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("pass") String pass){
 	
 		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
-		List<CategoryDO> dishType=itemDetailsDao.getDishType();
+		if(userData.size()==0)
+		{
+			ModelAndView modelAndView=new ModelAndView("errorPage");		 
+			return modelAndView;
+		}
+			List<CategoryDO> dishType=itemDetailsDao.getDishType();
 		//;
 		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
 		 modelAndView.addObject("userData", userData);
 		 modelAndView.addObject("dishType",dishType);
-		/* if(myorder.size()>0)
-		 modelAndView.addObject("myorder",myorder);
-	
-	if(userData.size()==0)
-	 {
-		 ModelAndView modelAndView1=new ModelAndView("errorPage");
-		 return modelAndView1;
-
-	 }*/
+		
 		 return modelAndView;
 
 	}
@@ -202,7 +205,6 @@ public class HomeController {
 		 ModelAndView modelAndView=new ModelAndView("makeOrder");
 		 modelAndView.addObject("listOfItems", listOfItems);
 		 modelAndView.addObject("user",user);
-	     //List<OrderDetailsDO> orderHistory=orderDetailsDao.getMyOrder(userId);
 	     
 		 return modelAndView;
 		
@@ -210,7 +212,7 @@ public class HomeController {
 	@RequestMapping(value="/orderConfirmed",method= RequestMethod.POST)
 	public ModelAndView orderConfirmed(@RequestParam("userId") Integer userId,
 			@RequestParam("item") String item,
-			@RequestParam("quant") Integer quant)
+			@RequestParam("quant") Integer quant)   
 	{
 		ModelAndView modelAndView=new ModelAndView("Success");
 		Integer itemId=orderDetailsDao.itemIdFromItem(item);

@@ -112,5 +112,12 @@ public class OrderDetailDao {
 
 			return empList;
 		}
+
+	public void updateStats(Integer orderId) {
+		
+		this.jdbcTemplate.update(
+                "update hotspice.order_details set status='Cancel' where order_id=?", 
+                orderId);
+	}
 	 }
 
