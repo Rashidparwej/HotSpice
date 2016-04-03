@@ -29,7 +29,7 @@ $('input.single-checkbox').on('change', function(evt) {
 			 
 			
     </c:forEach>
-    			<br> Enter Quantity <input type="text" name="quant" />
+    			<br> Enter Quantity <input type="text" name="quant" required="true" />
     
 		
 		<input type="hidden" name="userId" value="${user.userId}">	

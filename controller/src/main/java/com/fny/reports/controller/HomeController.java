@@ -217,9 +217,15 @@ public class HomeController {
 			@RequestParam("item") String item,
 			@RequestParam("quant") Integer quant)   
 	{
-		ModelAndView modelAndView=new ModelAndView("Success");
+		if(quant==0)
+		{
+			ModelAndView modelAndView=new ModelAndView("errorPage");
+			return modelAndView;
+		}
+			
 		Integer itemId=orderDetailsDao.itemIdFromItem(item);
 		orderDetailsDao.insert(userId, itemId, quant); 
+		ModelAndView modelAndView=new ModelAndView("Success");
 		return modelAndView;                      
 	}
 	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)   //Home page for admin panel
