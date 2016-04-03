@@ -37,16 +37,15 @@ table, th, td {
 <h2>CANCEL YOUR ORDER </h2>
 <form id="queryBox" action="updateStatusForCustomer" method="POST">             
 		<br>
-            </br>
             	<b>SELECT ORDER ID</b>
 		<br> <select name="orderId"">
 			<option value="">Please select one </option>
 			    <c:forEach items="${myorder}" var="list">
-			 <option value="${list.orderId}}">${list.orderId}</option>
+			 <option value="${list.orderId}">${list.orderId}</option>
     </c:forEach>
 		</select>
 		<br></br>
-		<input type="submit" value="UPDATE" />
+		<input type="submit" value="CANCEL ORDER" />
 
 	</form>
 

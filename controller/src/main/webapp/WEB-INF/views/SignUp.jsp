@@ -30,15 +30,15 @@
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td><input type="email" name="email" value="" /></td>
+                        <td><input type="email" name="email" value="" required="true" /></td>
                     </tr>
                     <tr>
                         <td>User Name</td>
-                        <td><input type="text" name="uname" value="" /></td>
+                        <td><input type="text" name="uname" value="" required="true" /></td>
                     </tr>
                     <tr>
                         <td>Password</td>
-                        <td><input type="password" name="pass" value="" /></td>
+                        <td><input type="password" name="pass" value="" required="true" /></td>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Submit" /></td>

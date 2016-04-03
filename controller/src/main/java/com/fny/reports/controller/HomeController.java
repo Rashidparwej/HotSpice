@@ -63,7 +63,7 @@ public class HomeController {
 		System.out.println("Bean created");
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)   //Home page
 	public String index() {
 		System.out.println("Invoked home");
 		return "index";
@@ -75,20 +75,21 @@ public class HomeController {
 			return "SignUp";
 		}
 
-	@RequestMapping(value="/updateItems", method = RequestMethod.GET)
+	@RequestMapping(value="/updateItems", method = RequestMethod.GET)  //Updating Item in Item table
 	public String update() {
 		System.out.println("Invoked home");
 		return "UpdateItem";
 	}
 
 	
-	@RequestMapping(value="/deleteItemDb", method = RequestMethod.POST)
+	@RequestMapping(value="/deleteItemDb", method = RequestMethod.POST)   //Delete item from Item table
 	public String deleteItem(@RequestParam("itemId") Integer itemId) {
 		
 		itemDetailsDao.delete(itemId);
 		return "Welcome";
 	 
 	}
+	
 	@RequestMapping(value="/deleteItem", method = RequestMethod.GET)
 	public ModelAndView deleteItem() {
 		ModelAndView modelAndView=new ModelAndView("DeleteItem");
@@ -98,10 +99,8 @@ public class HomeController {
 		return modelAndView;
 	
 	}
-	
-	
 
-	@RequestMapping(value="/orderdetail",method= RequestMethod.GET)
+	@RequestMapping(value="/orderdetail",method= RequestMethod.GET)   //Details of all orders
 	public ModelAndView orderdetails() throws SQLException
 	{
 		ModelAndView modelAndView=new ModelAndView("OrderDetails");
@@ -110,25 +109,24 @@ public class HomeController {
 
 		return modelAndView;
 	}
-	@RequestMapping(value="/orderhistory",method= RequestMethod.POST)
+	@RequestMapping(value="/orderhistory",method= RequestMethod.POST)   //Order history of Users
 	public ModelAndView orderhistory(@RequestParam("userId") Integer userId)throws SQLException
 	{
 		ModelAndView modelAndView=new ModelAndView("OrderHistory");
 		List<OrderDetailsDO> myorder = orderDetailsDao.getMyOrder(userId);
 		modelAndView.addObject("myorder", myorder);
-
 		return modelAndView;
 	}
-	@RequestMapping(value="/updateorderstatus",method= RequestMethod.GET)
+	@RequestMapping(value="/updateorderstatus",method= RequestMethod.GET)   //Update status of order
 	public ModelAndView updateOrder()
 	{
 		ModelAndView modelAndView=new ModelAndView("UpdateOrderStatus");
 		List<Integer> orders=updateOrderStatusDao.getOrderId();
 		modelAndView.addObject("orders",orders);
-		return modelAndView;
-	}                                                   
-	@RequestMapping(value="/addItem",method= RequestMethod.POST)
-	public void addItem(@RequestParam("itemId") Integer itemId, @RequestParam("categoryId") Integer categoryId,
+		return modelAndView;                             
+	}                                                    
+	@RequestMapping(value="/addItem",method= RequestMethod.POST)    //Adding item to item table
+	public String addItem(@RequestParam("itemId") Integer itemId, @RequestParam("categoryId") Integer categoryId,
 			@RequestParam("name") String name,@RequestParam("cost")Integer cost)
 	{
 		ItemDO item =new ItemDO();
@@ -136,14 +134,15 @@ public class HomeController {
 		item.setCategoryId(categoryId);
 		item.setCost(cost);                        
 		item.setName(name);
-		updateItemDao.insert(item);                  
+		updateItemDao.insert(item);     
+		return "Sucess";
 	}
 	
 	@RequestMapping(value="/updateStatusDb",method= RequestMethod.POST)
 	public String updateStatusDb(@RequestParam("orderId") Integer orderId, @RequestParam("status") String status)
 	{
 		orderDetailsDao.update(orderId,status);
-		return "Welcome";
+		return "Sucess";
 		
 	}
 
@@ -156,7 +155,7 @@ public class HomeController {
 	}
 	
 	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@RequestMapping(value="/login", method = RequestMethod.POST)        //login page
 	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("pass") String pass){
 	
 		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
@@ -166,17 +165,16 @@ public class HomeController {
 			return modelAndView;
 		}
 			List<CategoryDO> dishType=itemDetailsDao.getDishType();
-		//;
-		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
-		 modelAndView.addObject("userData", userData);
-		 modelAndView.addObject("dishType",dishType);
+		    ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
+		    modelAndView.addObject("userData", userData);
+		    modelAndView.addObject("dishType",dishType);
 		
 		 return modelAndView;
 
 	}
 	
 
-	@RequestMapping(value="/signup", method = RequestMethod.POST)
+	@RequestMapping(value="/signup", method = RequestMethod.POST)   //for signup
 	public String signup(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
 			@RequestParam("email") String email, @RequestParam("uname") String uname, @RequestParam("pass") String pass){
 		
@@ -219,7 +217,7 @@ public class HomeController {
 		orderDetailsDao.insert(userId, itemId, quant); 
 		return modelAndView;                      
 	}
-	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)
+	@RequestMapping(value="/adminPanel", method = RequestMethod.GET)   //Home page for admin panel
 	public String adminPanel() {
     		System.out.println("Invoking dashboard links");
 			return "adminPanel";

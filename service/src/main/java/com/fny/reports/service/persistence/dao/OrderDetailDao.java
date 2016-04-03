@@ -48,7 +48,6 @@ public class OrderDetailDao {
 		this.jdbcTemplate.update(
                 "update hotspice.order_details set status=? where order_id=?", 
                 status, orderId);
-		//jdbcTemplate.update(sql, "status","orderId");
 	   
 	}
 	public void insert(Integer userId,Integer itemId,Integer quant)
@@ -109,7 +108,7 @@ public class OrderDetailDao {
 				}
 
 			});
-
+			
 			return empList;
 		}
 
@@ -119,5 +118,5 @@ public class OrderDetailDao {
                 "update hotspice.order_details set status='Cancel' where order_id=?", 
                 orderId);
 	}
-	 }
+	}
 
