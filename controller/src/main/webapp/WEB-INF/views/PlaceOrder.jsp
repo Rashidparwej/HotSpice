@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style">
+<style type="text/css">
 div {
     background-color: lightgrey;
     width: 120px;
@@ -18,14 +18,7 @@ div {
     margin: 25px;
 }
 </style>
-<script>
-var limit = 1;
-$('input.single-checkbox').on('change', function(evt) {
-   if($(this).siblings(':checked').length >= limit) {
-       this.checked = false;
-   }
-});
-</script>
+
 </head>
 
 
@@ -43,9 +36,15 @@ Welcome to ordering page
 <br></br>   
 <input type="submit" value="GO TO ITEM DETAILS">
 </form>
- <centre>
- <div><a href="orderhistory" ><h2>YOUR ORDER HISTORY</h2></a></div>
- </centre>
+<br>
+<br>
+<p>
+<form method="post" action="orderhistory">
+ <input type="hidden" name="userId" value="${userData[0].userId}">			
+ <input type="submit" value="YOUR ORDER HISTORY">
+ 
+
+</form>
  
 	
 

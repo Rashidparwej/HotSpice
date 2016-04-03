@@ -113,7 +113,15 @@ public class HomeController {
 
 		return modelAndView;
 	}
-	
+	@RequestMapping(value="/orderhistory",method= RequestMethod.POST)
+	public ModelAndView orderhistory(@RequestParam("userId") Integer userId)throws SQLException
+	{
+		ModelAndView modelAndView=new ModelAndView("OrderHistory");
+		List<OrderDetailsDO> myorder = orderDetailsDao.getMyOrder(userId);
+		modelAndView.addObject("myorder", myorder);
+
+		return modelAndView;
+	}
 	@RequestMapping(value="/updateorderstatus",method= RequestMethod.GET)
 	public ModelAndView updateOrder()
 	{
@@ -147,7 +155,7 @@ public class HomeController {
 	
 		List<UsersDO> userData=usersDao.checkUserPresence(uname, pass);
 		List<CategoryDO> dishType=itemDetailsDao.getDishType();
-		//List<MyOrdersDO> myorder = orderDetailsDao.getMyOrder(userData.get(0).getUserId());
+		//;
 		ModelAndView modelAndView=new ModelAndView("PlaceOrder");		 
 		 modelAndView.addObject("userData", userData);
 		 modelAndView.addObject("dishType",dishType);
